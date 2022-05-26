@@ -24,7 +24,6 @@ const register = async (req, res) => {
 // login
 const login = async (req, res) => {
     const { username, password } = req.body;
-
     const user = await User.findOne({
         where: {
             username
