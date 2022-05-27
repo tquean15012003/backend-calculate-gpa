@@ -43,13 +43,39 @@ const login = async (req, res) => {
             });
         } else {
             res.status(500).send({
-                message: "Incorrect password"
+                message: "Incorrect password!"
             });
         }
     } else {
         res.status(500).send({
-            message: "User does not exist"
+            message: "Username does not exist!"
         });
+    }
+}
+
+// logged in or not
+const isLoggedIn = async (req, res) => {
+    const token = await req.headers["token"];
+    console.log(token);
+    try {
+        const decode = jwt.verify(token, "calculate-gpa-harry-tran");
+        if (decode) {
+            username = decode.username;
+            const user = await User.findOne({
+                where: {
+                    username
+                }
+            });
+            res.status(200).send({
+                message: "Logged in already",
+                token,
+                user
+            });
+        } else {
+            res.status(401).send("Haven't logged in yet!!");
+        }
+    } catch (error) {
+        res.status(401).send("Haven't logged in yet!!");
     }
 }
 
@@ -156,5 +182,6 @@ module.exports = {
     getUserList,
     getUserDetail,
     updateUserForAdmin,
-    deleteUser
+    deleteUser,
+    isLoggedIn
 }
