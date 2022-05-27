@@ -13,7 +13,7 @@ const register = async (req, res) => {
         const hashPassword = bcrypt.hashSync(password, salt);
         const newUser = await User.create({ username, password: hashPassword, name, email, phoneNumber });
         res.status(201).send({
-            message: "Register successfullu",
+            message: "Register successfully",
             user: newUser
         });
     } catch (error) {
