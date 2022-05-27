@@ -56,7 +56,6 @@ const login = async (req, res) => {
 // logged in or not
 const isLoggedIn = async (req, res) => {
     const token = await req.headers["token"];
-    console.log(token);
     try {
         const decode = jwt.verify(token, "calculate-gpa-harry-tran");
         if (decode) {
