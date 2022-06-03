@@ -63,6 +63,29 @@ const getCourseDetail = async (req, res) => {
     };
 }
 
+const getCourseDetailByCourseCode = async (req, res) => {
+    const { courseCode } = req.params;
+    try {
+        const course = await Course.findOne({
+            where: {
+                courseCode
+            }
+        });
+        if (course) {
+            res.status(200).send({
+                message: "Get the course detail successfully",
+                course
+            });
+        } else {
+            res.status(404).send({
+                message: "Cannot find the course with this course code!"
+            });
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    };
+}
+
 // update course (admin only)
 const updateCourse = async (req, res) => {
     const { id } = req.params;
@@ -118,5 +141,6 @@ module.exports = {
     getCourseList,
     getCourseDetail,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    getCourseDetailByCourseCode
 };
