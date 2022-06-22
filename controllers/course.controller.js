@@ -4,7 +4,7 @@ const { Course } = require('../models/index.js');
 // create course (admin onlu)
 const createCourse = async (req, res) => {
     const course = {
-        courseCode: req.body.courseCode,
+        courseCode: req.body.courseCode.toUpperCase(),
         courseName: req.body.courseName,
         noAU: req.body.noAU
     };
@@ -32,7 +32,10 @@ const getCourseList = async (req, res) => {
                     }
                 }
             });
-            res.status(200).send(courseList);
+            res.status(200).send({
+                message: "Get the course list successfully",
+                courseList
+            });
         } else {
             const courseList = await Course.findAll();
             res.status(200).send({

@@ -9,13 +9,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       courseCode: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          notEmpty: true,
+        }
       },
       courseName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        }
       },
       noAU: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+          isInt: true,
+          min: 1
+        }
       },
       createdAt: {
         allowNull: false,
