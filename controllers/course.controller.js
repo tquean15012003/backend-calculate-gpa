@@ -93,7 +93,7 @@ const getCourseDetailByCourseCode = async (req, res) => {
 const updateCourse = async (req, res) => {
     const { id } = req.params;
     const course = {
-        courseCode: req.body.courseCode,
+        courseCode: req.body.courseCode.toUpperCase(),
         courseName: req.body.courseName,
         noAU: req.body.noAU
     };

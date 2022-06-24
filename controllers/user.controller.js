@@ -90,11 +90,14 @@ const getUserList = async (req, res) => {
                     }
                 }
             });
-            res.status(400).send(userList);
+            res.status(200).send({
+                message: "Get the user list successfully",
+                userList
+            });
         }
         else {
             const userList = await User.findAll();
-            res.status(400).send({
+            res.status(200).send({
                 message: "Get the user list successfully",
                 userList
             });
@@ -126,19 +129,13 @@ const getUserDetail = async (req, res) => {
 // update user (admin only)
 const updateUserForAdmin = async (req, res) => {
     const { id } = req.params;
-    const { password, name, email, phoneNumber } = req.body
+    const { name, email, phoneNumber } = req.body
     try {
         const updatedUser = await User.findOne({
             where: {
                 id
             }
         });
-        // generate a string randomly
-        const salt = bcrypt.genSaltSync(10);
-        // encrypt random string + password
-        const hashPassword = bcrypt.hashSync(password, salt);
-
-        updatedUser.password = hashPassword;
         updatedUser.name = name;
         updatedUser.email = email;
         updatedUser.phoneNumber = phoneNumber;
